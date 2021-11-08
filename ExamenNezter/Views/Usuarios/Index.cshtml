@@ -1,0 +1,82 @@
+﻿@model IEnumerable<ExamenNezter.Models.UsuariosModel>
+
+@{
+    ViewData["Title"] = "Usuarios";
+
+    ExamenNezter.Datos.CiudadesData dataCiudades = new ExamenNezter.Datos.CiudadesData();
+    IEnumerable<CiudadesModel> modeloCiudades;
+
+    modeloCiudades = dataCiudades.Consultar();
+
+    ExamenNezter.Datos.TipoUsuarioData dataTipoUsuario = new ExamenNezter.Datos.TipoUsuarioData();
+    IEnumerable<TipoUsuarioModel> modeloTipoUsuario;
+
+    modeloTipoUsuario = dataTipoUsuario.Consultar();
+}
+
+<h1>Usuarios</h1>
+
+<p>
+    <a asp-action="Guardar">Nuevo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Usuario</th>
+            <th>Nombre</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+            <th>CP</th>
+            <th>Ciudad</th>
+            <th>Tipo</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Usuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Direccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cp)
+            </td>
+            <td>
+                @foreach (var ciudad in modeloCiudades)
+                {
+                    if (ciudad.Id == item.Id_ciudad)
+                    {
+                        @ciudad.Ciudad
+                    }
+                }
+            </td>
+            <td>
+                @foreach (var tipousuario in modeloTipoUsuario)
+                {
+                    if (tipousuario.Id == item.Id_ciudad)
+                    {
+                        @tipousuario.Tipo_usuario
+                    }
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Guardar", new { id = item.Id }) |
+                @Html.ActionLink("Eliminar", "Eliminar", new { id = item.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

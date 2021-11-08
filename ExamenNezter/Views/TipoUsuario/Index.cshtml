@@ -1,0 +1,36 @@
+﻿@model IEnumerable<ExamenNezter.Models.TipoUsuarioModel>
+
+@{
+    ViewData["Title"] = "Tipo de Usuario";
+}
+
+<h1>Tipo de Usuario</h1>
+
+<p>
+    <a asp-action="Guardar">Nuevo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tipo de Usuario</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipo_usuario)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Guardar", new { id = item.Id }) |
+                @Html.ActionLink("Eliminar", "Eliminar", new { id = item.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

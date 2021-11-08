@@ -1,0 +1,129 @@
+﻿@model ExamenNezter.Models.UsuariosModel
+
+@{
+    ViewData["Title"] = "Guardar";
+
+    var RouteData = ViewContext.RouteData.Values["id"];
+    int id = 0;
+    ExamenNezter.Datos.UsuariosData data = new ExamenNezter.Datos.UsuariosData();
+    ExamenNezter.Models.UsuariosModel modelo = new UsuariosModel();
+
+    if (RouteData != null)
+    {
+        id = int.Parse(RouteData + "");
+        modelo = data.ConsultarID(id);
+    }
+}
+
+<h1>Guardar</h1>
+
+<h4>Usuarios</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("Select", "Usuarios"))
+        {
+            <form asp-action="Nuevo">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @if (modelo.Id != 0)
+                {
+                    <div class="form-group">
+                        <label asp-for="Id" class="control-label">ID</label>
+                        <input asp-for="Id" class="form-control" readonly />
+                        <span asp-validation-for="Id" class="text-danger"></span>
+                    </div>
+                }
+                <div class="form-group">
+                    <label asp-for="Usuario" class="control-label"></label>
+                    @if (modelo.Id != 0)
+                    {
+                        <input asp-for="Usuario" class="form-control" value="@modelo.Usuario" />
+                    }
+                    else
+                    {
+                        <input asp-for="Usuario" class="form-control" />
+                    }
+                    <span asp-validation-for="Usuario" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Nombre" class="control-label">Nombre</label>
+                    @if (modelo.Id != 0)
+                    {
+                        <input asp-for="Nombre" class="form-control" value="@modelo.Nombre" />
+                    }
+                    else
+                    {
+                        <input asp-for="Nombre" class="form-control" />
+                    }
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Direccion" class="control-label">Dirección</label>
+                    @if (modelo.Id != 0)
+                    {
+                        <input asp-for="Direccion" class="form-control" value="@modelo.Direccion" />
+                    }
+                    else
+                    {
+                        <input asp-for="Direccion" class="form-control" />
+                    }
+                    <span asp-validation-for="Direccion" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Telefono" class="control-label">Teléfono</label>
+                    @if (modelo.Id != 0)
+                    {
+                        <input asp-for="Telefono" class="form-control" value="@modelo.Telefono" />
+                    }
+                    else
+                    {
+                        <input asp-for="Telefono" class="form-control" />
+                    }
+                    <span asp-validation-for="Telefono" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Cp" class="control-label">CP</label>
+                    @if (modelo.Id != 0)
+                    {
+                        <input asp-for="Cp" class="form-control" value="@modelo.Cp" />
+                    }
+                    else
+                    {
+                        <input asp-for="Cp" class="form-control" />
+                    }
+                    <span asp-validation-for="Cp" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Id_ciudad" class="control-label">Ciudad</label>
+
+                    @Html.DropDownList("mySelectC", null, "[Seleccionar ciudad]", new { @class = "form-control" })
+
+                    <span asp-validation-for="Id_ciudad" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Id_tipo_usuario" class="control-label">Tipo</label>
+
+                    @Html.DropDownList("mySelectTU", null, "[Seleccionar tipo de usuario]", new { @class = "form-control" })
+
+                    <span asp-validation-for="Id_tipo_usuario" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Contrasena" class="control-label">Contraseña</label>
+                    <input asp-for="Contrasena" class="form-control" type="password"/>
+                    <span asp-validation-for="Contrasena" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                </div>
+            </form>
+        }
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Regresar a la lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

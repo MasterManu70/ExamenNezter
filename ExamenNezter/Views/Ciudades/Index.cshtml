@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ExamenNezter.Models.CiudadesModel>
+
+@{
+    ViewData["Title"] = "Ciudades";
+
+    ExamenNezter.Datos.EstadosData dataEstados = new ExamenNezter.Datos.EstadosData();
+    IEnumerable<EstadosModel> modeloEstado;
+
+    modeloEstado = dataEstados.Consultar();
+}
+
+<h1>Ciudades</h1>
+
+<p>
+    <a asp-action="Guardar">Nuevo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Ciudad</th>
+            <th>Estado</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ciudad)
+            </td>
+            <td>
+                @foreach (var estado in modeloEstado)
+                {
+                    if (item.Id == estado.Id)
+                    {
+                        @estado.Estado
+                    }
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Guardar", new { id = item.Id }) |
+                @Html.ActionLink("Eliminar", "Eliminar", new { id = item.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
